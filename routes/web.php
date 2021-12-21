@@ -7,6 +7,8 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\LikesController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\CommentController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -69,19 +71,20 @@ Route::middleware(['auth', 'notif'])->group(function () {
     // GET localhost:8000/search/users?keywords=asdasd
     Route::get('/search/users', [SearchController::class, 'users'])->name('search.users');
     
-    Route::post('/comment/{post}', function () {
-        return view('welcome');
-    })->name('comments.store');
-    
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
     
+//    // GET localhost:8000/comment/123
+//    Route::get('/post', [CommentController::class, 'show'])->name('comment.show');
+    
     // comments.store -> POST
+    // POST localhost:8000/comment/p/123
+    Route::post('/comment/{post}', [CommentController::class, 'store'])->name('comments.store');
+    
     // comments.destroy -> DELETE
+    // POST localhost:8000/comment/123
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comments.remove');
 });
-
-
-
 
 require __DIR__.'/auth.php';

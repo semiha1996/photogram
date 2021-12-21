@@ -13,6 +13,8 @@ use App\Events\NewPostEvent;
 use App\Listeners\NewPostListener;
 use App\Events\NewLikeEvent;
 use App\Listeners\NewLikeListener;
+use App\Events\NewCommentEvent;
+use App\Listeners\NewCommentListener;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -52,6 +54,11 @@ class EventServiceProvider extends ServiceProvider
         Event::listen(
             NewLikeEvent::class,
             [NewLikeListener::class, 'handle']
+        );
+        
+        Event::listen(
+            NewCommentEvent::class,
+            [NewCommentListener::class, 'handle']
         );
     }
 }
