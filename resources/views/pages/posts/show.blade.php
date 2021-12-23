@@ -70,6 +70,10 @@
                             <hr />
                             <div id="comments" class="row">
                                 <div class="col mt-3" id="comments">
+                                    @foreach($post->comments as $comment)
+                                    <div>{{$comment->text}}</div>
+                                    <div>{{$comment->user->name}}</div>
+                                   @endforeach
                                 </div>
                             </div>
                             <hr />

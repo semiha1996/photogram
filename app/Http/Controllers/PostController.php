@@ -35,6 +35,7 @@ class PostController extends Controller
         return $builder->with('photos')
                 ->with('user.details')
                 ->withCount('likes') // likes_count
+                ->withCount('comments') // comments_count
                 ->orderBy('created_at', 'desc')
                 ->limit(self::POSTS_PER_REQUEST)
                 ->offset($offset)

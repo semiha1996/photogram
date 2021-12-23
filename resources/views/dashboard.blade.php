@@ -64,8 +64,8 @@
                             template.querySelector('.post-description').innerText = post.description;
                             let created_at = new Date(post.created_at);
                             template.querySelector('.post-created').innerText = created_at.getDate() + '.' + created_at.getMonth() + '.' + created_at.getFullYear();
-                            // template.querySelector('.comments-count').innerText = post.comments_count;
-                            template.querySelector('.comments-count').innerText = 0;
+                            template.querySelector('.comments-count').innerText = post.comments_count;
+                            //template.querySelector('.comments-count').innerText = 0;
                             template.querySelector('.likes-count').innerText = post.likes_count;
                             feed.appendChild(template);
                             template.classList.remove('visually-hidden');
