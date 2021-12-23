@@ -70,10 +70,38 @@
                             <hr />
                             <div id="comments" class="row">
                                 <div class="col mt-3" id="comments">
-                                    @foreach($post->comments as $comment)
-                                    <div>{{$comment->text}}</div>
-                                    <div>{{$comment->user->name}}</div>
-                                   @endforeach
+                                    @if($post->comments()->count())
+                                        <ul class="list-group">
+                                            @foreach ($post->comments->reverse() as $comment)
+                                            <li class="list-group-item" id="comment{{$comment->id}}">
+                                                <div class="card mb-3">
+                                                    <div class="row g-0">
+                                                        <div class="col-md-4">
+                                                            <img src="{{ $comment->user->details->profile_photo }}" alt="comment author" />
+                                                        </div>
+                                                        <div class="col-md-8">
+                                                            <div class="card-body">
+                                                                <h5 class="card-title">{{ $comment->user->details->display_name }}</h5>
+                                                                <p class="card-text">{{ $comment->text }}</p>
+                                                                <p class="card-text">
+                                                                    <small class="text-muted">
+                                                                        {{ $comment->created_at->format('H:i, d.m.Y') }}
+                                                                    </small>
+                                                                </p>
+                                                                @if (auth()->id() === $comment->user_id || auth()->id() === $post->user_id)
+                                                                    <p class="card-text">
+                                                                        <a href="{{ route('comments.destroy', ['comment' => $comment]) }}" class="delete-comment text-danger" data-comment-id="{{ $comment->id }}">
+                                                                            {{ __('Delete comment') }}
+                                                                        </a>
+                                                        </p>
+                                                 @endif</div></div>                                                  
+                                                    </div>
+                                               </div>
+                                    </li>                                        
+                                    @endforeach</ul>                    
+                                    @else
+                                    <p class="text-muted">{{ __('No comments for this post') }}</p>
+                                    @endif
                                 </div>
                             </div>
                             <hr />
@@ -97,7 +125,7 @@
         
         <script>
             window.onload = function() {
-@if($post->user->id === auth()->id())
+            @if($post->user->id === auth()->id())
                 document.getElementById('postRemove').addEventListener('click', (event) => {
                     event.preventDefault();
                     event.stopPropagation();
@@ -133,11 +161,14 @@
                     link.addEventListener('click', (event) => {
                         event.preventDefault();
                         event.stopPropagation();
-                        axios.delete(event.target.href).then((response) => {
-                            if (response.status === 200 && response.data.result) {
-                                document.querySelector('#comment' + event.target.dataset.commentId).remove();
-                            }
-                        }).catch(() => { window.alert('Error while deleting the comment'); });
+                        let confirm = window.confirm('{{ __('Are you sure you want to remove this comment?') }}');
+                        if (confirm) {
+                            axios.delete(event.target.href).then((response) => {
+                                if (response.status === 200 && response.data.result) {
+                                    document.querySelector('#comment' + event.target.dataset.commentId).remove();
+                                }
+                            }).catch(() => { window.alert('Error while deleting the comment'); });
+                        }
                     });
                 }
             };

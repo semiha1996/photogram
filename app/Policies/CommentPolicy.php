@@ -13,7 +13,6 @@ class CommentPolicy
 
  
     /**
-     * Determine whether the user can delete the model.
      * The user, who created the comment can delete it.
      * The user, whose post has been commented can delete the comment
      *
@@ -21,10 +20,10 @@ class CommentPolicy
      * @param  \App\Models\Comment  $comment
      * @return \Illuminate\Auth\Access\Response|bool
      */
-//    public function delete(User $user, Comment $comment)
-//    {
-//        // User is commenter OR User is the original author of the post.
-//        return $comment->user_id === $user->id || $comment->post()->user()->id === $user->id;
-//    }
+    public function delete(User $user, Comment $comment)
+    {
+        // User is commenter OR User is the original author of the post.
+        return $comment->user_id === $user->id || $comment->post->user->id === $user->id;
+    }
 
 }

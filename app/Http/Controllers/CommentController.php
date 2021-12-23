@@ -51,7 +51,15 @@ class CommentController extends Controller
         if($request->user()->cannot('delete', $comment)){
             abort(403);
         }
-        $comment->delete();
+        if ($comment->delete()) {
+            $responseCode = 200;
+            $responseResult = "Deletion was sucessfull";
+        } else {
+            $responseCode = 500;
+            $responseResult = "Deletion failed";
+        }
+        
+        return response(['result' => $responseResult], $responseCode);
     }
     
 }

@@ -84,7 +84,7 @@ Route::middleware(['auth', 'notif'])->group(function () {
     
     // comments.destroy -> DELETE
     // POST localhost:8000/comment/123
-    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comments.remove');
+    Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });
 
 require __DIR__.'/auth.php';
