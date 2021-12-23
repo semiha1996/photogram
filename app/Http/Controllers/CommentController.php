@@ -2,13 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Database\Eloquent\Relations;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
-use App\Http\Requests\UpdateCommentRequest;
 use \Illuminate\Http\Request;
-use App\Models\Post;
-use App\Models\User;
+use App\Events\NewCommentEvent;
 
 class CommentController extends Controller
 {
@@ -24,10 +21,12 @@ class CommentController extends Controller
         $comment = new Comment();
         $comment->text = strip_tags($validated['text']);
         $comment->user()->associate(auth()->user());
-        $comment->post()->associate(auth()->post());
+       // $comment->post()->associate(auth()->user()->posts());
         try {
             $comment->saveOrFail();
             
+             NewCommentEvent::dispatch($post, auth()->user());
+             
             return redirect()->route('post', ['user' => auth()->user()]);//?????
         } catch (\Throwable $ex) {
             if ($comment->id) {

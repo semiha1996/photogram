@@ -19,12 +19,12 @@ class Comment extends Model
     // 1 comments - 1 Post
     public function post() 
     {
-        $this->belongsTo(Post::class);
+        return $this->belongsTo(Post::class);
     }
     
     // 1 Comment - 1 User
     public function user() 
     {
-        $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 }
