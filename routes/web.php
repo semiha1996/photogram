@@ -75,14 +75,9 @@ Route::middleware(['auth', 'notif'])->group(function () {
         return view('dashboard');
     })->name('dashboard');
     
-//    // GET localhost:8000/comment/123
-//    Route::get('/post', [CommentController::class, 'show'])->name('comment.show');
-    
-    // comments.store -> POST
     // POST localhost:8000/comment/p/123
     Route::post('/comment/{post}', [CommentController::class, 'store'])->name('comments.store');
     
-    // comments.destroy -> DELETE
     // POST localhost:8000/comment/123
     Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 });

@@ -3,8 +3,6 @@
 namespace App\Listeners;
 
 use App\Events\NewCommentEvent;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Models\UserNotification;
 
 class NewCommentListener

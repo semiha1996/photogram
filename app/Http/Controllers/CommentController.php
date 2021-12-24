@@ -30,7 +30,6 @@ class CommentController extends Controller
              NewCommentEvent::dispatch($comment->post, auth()->user());
              
              return redirect()->route('post.show', ['post' => $post->id]);
-            //return redirect()->route('post', ['user' => auth()->user()]);//?????
         } catch (\Throwable $ex) {
             if ($comment->id) {
                 $comment->delete();
