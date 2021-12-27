@@ -52,12 +52,11 @@ class CommentController extends Controller
         }
         if ($comment->delete()) {
             $responseCode = 200;
-            $responseResult = "Deletion was sucessfull";
+            $responseResult = true;
         } else {
             $responseCode = 500;
-            $responseResult = "Deletion failed";
+            $responseResult = false;
         }
-        
         return response(['result' => $responseResult], $responseCode);
     }
     
